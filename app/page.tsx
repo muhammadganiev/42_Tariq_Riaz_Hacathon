@@ -1,113 +1,261 @@
-import Image from "next/image";
+"use client";
+import { useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Spline from "@splinetool/react-spline";
+import Logo from "@/components/icons/Logo";
+import { BackgroundBeams } from "@/components/ui/background-beams";
+import { FlipWords } from "@/components/ui/flip-words";
+import TR_logo_white from "../public/TR_white.png";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { AuroraBackgroundDemo } from '@/components/ui/backgrounds/aurora-background';
+import { ThreeDCard } from '@/components/ui/cards/threed-card';
+import AGTA from "../public/2021_AGTA.png";
+import { IpadScroll } from '@/components/ui/ipad-scroll';
+import ItemOne from "@/public/item1.png"
+import ItemTwo from "@/public/item2.png"
+import { HideCard } from '@/components/ui/cards/hide-card';
+import { TextReveal } from '@/components/ui/cards/text-reveal';
+import { SparklesLight } from '@/components/ui/backgrounds/sparkles-light';
+import { SpeedWord } from '@/components/ui/backgrounds/speed-word';
+import Countdown from '@/components/ui/Countdown';
+import CustomCountdown from '@/components/ui/countdown/custom-countdonw';
+import { TextHoverEffect } from '@/components/ui/text-hover-effect';
+import { FalingBeams } from '@/components/ui/backgrounds/FalingBeams';
+import ItemCountdown from '@/components/ui/countdown/item-countdown';
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+const words = ["Better", "Innovative", "Beautiful", "Modern"];
 
 export default function Home() {
+  const cube = useRef<any>(null);
+  const ring = useRef<any>(null);
+  const dude = useRef<any>(null);
+  const splineRef = useRef<HTMLDivElement>(null);
+
+  function onLoad(spline: any) {
+    const obj = spline.findObjectById('9708f0ce-7da8-47e3-951e-df6658e856a9');
+    const spiderman = spline.findObjectById('C0DE995C-2EAB-4401-AC31-0EAB4B13910F');
+    const small_ring = spline.findObjectById('ba07b957-f178-4b5d-bbbe-c317f1c6b632');
+
+    dude.current = spiderman;
+    cube.current = obj;
+    ring.current = small_ring;
+
+    if (ring.current) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part1",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(ring.current.position, {
+        y: 0,
+        x: 300,
+      },0)
+      .to(ring.current.scale, {
+        x: 10,
+        y: 10,
+        z: 10,
+      },0)
+      .to(ring.current.rotation, {
+        z: Math.PI * 1,
+        x: Math.PI * -1.2,
+        y: Math.PI * -1,
+      }, 0);
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part2",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(ring.current.rotation, {
+        z: Math.PI * 0.5,
+        x: Math.PI * -1.2,
+        y: Math.PI * 1,
+      },0)
+      .to(ring.current.position, {
+        y: -20,
+        x: -300,
+      },0)
+      .to(ring.current.scale, {
+        x: 8,
+        y: 8,
+        z: 8,
+      }, 0);
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part3",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(ring.current.rotation, {
+        z: Math.PI * 1,
+        x: Math.PI * -1.2,
+        y: Math.PI * -1,
+      },0)
+      .to(ring.current.position, {
+        y: -20,
+        x: 0,
+      },0)
+      .to(ring.current.scale, {
+        x: 12,
+        y: 12,
+        z: 12,
+      }, 0)
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part4",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(ring.current.rotation, {
+        z: Math.PI * 1,
+        x: Math.PI * -1,
+        y: Math.PI * -0.5,
+      },0)
+      .to(ring.current.position, {
+        y: 600,
+        x: 600,
+      },0)
+      .to(ring.current.scale, {
+        x: 5,
+        y: 5,
+        z: 5,
+      }, 0)
+      
+    }
+    
+    
+
+    if (dude.current) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part1",
+          start: "top bottom",
+          end: "center bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(dude.current.position, {
+        y: 800,
+      });
+    }
+
+    if (cube.current) {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: "#part1",
+          start: "top bottom",
+          end: "bottom bottom",
+          scrub: true,
+          markers: true,
+        }
+      })
+      .to(cube.current.position, {
+        y: 1200,
+      });
+    }
+  }
+
+  useEffect(() => {
+  const updatePointerEvents = () => {
+    const part0Element = document.getElementById("part0");
+    console.log(part0Element)
+    if (part0Element) {
+      splineRef.current?.classList.add("pointer-events-none");
+    } else {
+      splineRef.current?.classList.remove("pointer-events-none");
+    }
+  };
+
+  window.addEventListener('scroll', updatePointerEvents);
+  return () => {
+    window.removeEventListener('scroll', updatePointerEvents);
+  };
+}, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main>
+      <div id="part0" className="w-screen h-screen bg-black">
+        <div className="flex flex-row gap-5 items-center text-6xl font-extrabold text-white/90 dark:text-neutral-400 absolute left-10 inset-y-0 z-20 pointer-events-none">
+          <div>
+            <Logo Logo_src={TR_logo_white} width={100} height={100} />
+          </div>
+          <div>
+            <FlipWords words={words} /> <br />
+            Tariq Riaz
+          </div>
+        </div>
+         
+        <div className="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
+          <BackgroundBeams />
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+      <Spline
+          ref={splineRef}
+          className="fixed top-0 left-0 right-0 bottom-0 z-10"
+          scene="https://draft.spline.design/u9bhzi3OVBWTaPFW/scene.splinecode"
+          onLoad={onLoad}
         />
+      <div id="part1" className="w-screen h-fit bg-zinc-50 -z-10">
+        <AuroraBackgroundDemo showContent></AuroraBackgroundDemo>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div id="part2" className="w-screen h-auto bg-zinc-50 z-30">
+        <IpadScroll></IpadScroll> 
       </div>
+      <div id="part3" className='bg-zinc-50 w-screen h-[100rem]'>
+        
+        <SparklesLight></SparklesLight>
+      </div>
+      <div id="part4" className="relative w-screen min-h-screen bg-zinc-50">
+      <div className="absolute inset-0 z-0">
+        <AuroraBackgroundDemo showContent={false} />
+      </div>
+      <SpeedWord></SpeedWord>
+      <div className="flex flex-wrap justify-evenly">
+        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
+          <HideCard Logo_src={ItemOne} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
+        </div>
+        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
+          <HideCard Logo_src={ItemTwo} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
+        </div>
+        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
+          <HideCard Logo_src={ItemOne} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
+        </div>
+        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
+          <HideCard Logo_src={ItemTwo} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
+        </div>
+      </div>
+    </div>
+
+    <div id="part5" className="relative flex flex-col items-center w-screen h-screen bg-zinc-50 p-10 sm:p-8">
+      <div className="absolute inset-0 z-0">
+        <FalingBeams></FalingBeams>
+      </div>
+      <div className=" h-fit w-fit-0 flex-row content-center z-10">
+      <div className='pb-10'>
+        <ItemCountdown></ItemCountdown>
+      </div>
+        
+        <CustomCountdown targetDate={new Date('2024-10-31T23:59:59')} />
+      </div>
+    </div>
     </main>
   );
 }
