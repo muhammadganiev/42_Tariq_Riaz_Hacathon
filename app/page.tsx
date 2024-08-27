@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Spline from "@splinetool/react-spline";
 import Logo from "@/components/icons/Logo";
@@ -23,13 +23,33 @@ import CustomCountdown from '@/components/ui/countdown/custom-countdonw';
 import { TextHoverEffect } from '@/components/ui/text-hover-effect';
 import { FalingBeams } from '@/components/ui/backgrounds/FalingBeams';
 import ItemCountdown from '@/components/ui/countdown/item-countdown';
+import { Button } from '@/components/ui/button';
+import FloatingItemCountdown from '@/components/ui/countdown/floating-item-countdown';
+import QR from "@/public/qr.png"
+import { Link } from 'lucide-react';
 
 
 gsap.registerPlugin(ScrollTrigger);
 
 const words = ["Better", "Innovative", "Beautiful", "Modern"];
 
+
 export default function Home() {
+  const [itemCount, setItemCount] = useState(25);
+  const [shake, setShake] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (itemCount > 0) {
+        setShake(true);
+        setTimeout(() => setShake(false), 500); // Remove shake after animation
+        setItemCount((prevCount) => prevCount - 1);
+      }
+    }, 20000); // Decrease every minute
+
+    return () => clearInterval(timer);
+  }, [itemCount]);
+
   const cube = useRef<any>(null);
   const ring = useRef<any>(null);
   const dude = useRef<any>(null);
@@ -51,7 +71,6 @@ export default function Home() {
           start: "top bottom",
           end: "bottom bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(ring.current.position, {
@@ -74,7 +93,6 @@ export default function Home() {
           start: "top bottom",
           end: "bottom bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(ring.current.rotation, {
@@ -97,7 +115,6 @@ export default function Home() {
           start: "top bottom",
           end: "bottom bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(ring.current.rotation, {
@@ -120,7 +137,6 @@ export default function Home() {
           start: "top bottom",
           end: "bottom bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(ring.current.rotation, {
@@ -149,7 +165,6 @@ export default function Home() {
           start: "top bottom",
           end: "center bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(dude.current.position, {
@@ -164,7 +179,6 @@ export default function Home() {
           start: "top bottom",
           end: "bottom bottom",
           scrub: true,
-          markers: true,
         }
       })
       .to(cube.current.position, {
@@ -223,6 +237,7 @@ export default function Home() {
         
         <SparklesLight></SparklesLight>
       </div>
+      <FloatingItemCountdown itemCount={itemCount} shake={shake} />
       <div id="part4" className="relative w-screen min-h-screen bg-zinc-50">
       <div className="absolute inset-0 z-0">
         <AuroraBackgroundDemo showContent={false} />
@@ -244,17 +259,39 @@ export default function Home() {
       </div>
     </div>
 
-    <div id="part5" className="relative flex flex-col items-center w-screen h-screen bg-zinc-50 p-10 sm:p-8">
+    <div id="part5" className="relative flex flex-col items-center w-screen h-screen gap-10 bg-zinc-50 sm:p-8">
       <div className="absolute inset-0 z-0">
         <FalingBeams></FalingBeams>
       </div>
+      
       <div className=" h-fit w-fit-0 flex-row content-center z-10">
-      <div className='pb-10'>
-        <ItemCountdown></ItemCountdown>
+      <div className='pb-10 pt-32'>
+      <ItemCountdown itemCount={itemCount} shake={shake} />
       </div>
         
         <CustomCountdown targetDate={new Date('2024-10-31T23:59:59')} />
       </div>
+      <h2 className="text-2xl relative z-20 md:text-4xl lg:text-7xl font-bold text-center text-neutral-800 dark:text-white font-sans tracking-tight">
+          Don't miss it{" "}
+          <div className="relative mx-auto inline-block w-max [filter:drop-shadow(0px_1px_3px_rgba(27,_37,_80,_0.14))]">
+          <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-4">
+              <span className=""> | Order now!</span>
+          </div>
+          </div>
+      </h2>
+      <Button variant={'outline'} className="border-main_color text-main_color hover:bg-main_color hover:text-white rounded-full text-2xl font-light z-20"> Shop now </Button>
+    </div>
+    <div id='part6' className='w-screen h-screen gap-10 flex flex-col pt-40 items-center bg-black'>
+      <div className=''>
+        <Logo Logo_src={QR} width={400} height={400}></Logo>
+      </div>
+      <Button variant={'outline'} className='text-white border border-white hover:bg-white hover:text-black text-2xl'> 
+        <Link className='pr-2'>
+        
+        </Link>
+         Ready to try? 
+        </Button>
+       
     </div>
     </main>
   );

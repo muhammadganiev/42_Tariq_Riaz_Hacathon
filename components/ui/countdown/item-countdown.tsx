@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-const ItemCountdown: React.FC = () => {
-  const [count, setCount] = useState(25);
-  const [shake, setShake] = useState(false);
+interface ItemCountdownProps {
+  itemCount: number;
+  shake: boolean;
+}
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (count > 0) {
-        setShake(true);
-        setTimeout(() => setShake(false), 500); // Remove shake after animation
-        setCount((prevCount) => prevCount - 1);
-      }
-    }, 60000); // Decrease every minute
-
-    return () => clearInterval(timer);
-  }, [count]);
-
+const ItemCountdown: React.FC<ItemCountdownProps> = ({ itemCount, shake }) => {
   return (
-    <div className={`flex flex-col items-center font-bold p-2   text-main_color ${shake ? 'shake' : ''}`}>
-      <span className="text-6xl sm:text-9xl">{count}</span>
+    <div className={`flex flex-col items-center font-bold p-2 text-main_color ${shake ? 'shake' : ''}`}>
+      <span className="text-6xl sm:text-9xl">{itemCount}</span>
       <span className="text-xl sm:text-4xl">ITEMS LEFT</span>
 
       <style jsx>{`
