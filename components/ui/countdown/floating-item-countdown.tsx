@@ -45,7 +45,7 @@ const FloatingItemCountdown: React.FC<FloatingItemCountdownProps> = ({ itemCount
       style={{ transform: 'translateX(100%)' }}
     >
       <div className="flex flex-col items-center">
-        <span className="text-3xl font-bold">Items Left:</span>
+        <span className="text-1xl font-bold">Items Left:</span>
         <span className="text-4xl font-bold text-red-500">{itemCount}</span>
       </div>
 

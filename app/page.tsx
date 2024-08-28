@@ -27,11 +27,12 @@ import { Button } from '@/components/ui/button';
 import FloatingItemCountdown from '@/components/ui/countdown/floating-item-countdown';
 import QR from "@/public/qr.png"
 import { Link } from 'lucide-react';
+import { FloatingContucts } from '@/components/ui/cards/floating-contacts';
 
 
 gsap.registerPlugin(ScrollTrigger);
 
-const words = ["Better", "Innovative", "Beautiful", "Modern"];
+const words = ["Stunning", "Innovative", "Beautiful", "Modern"];
 
 
 export default function Home() {
@@ -212,8 +213,8 @@ export default function Home() {
             <Logo Logo_src={TR_logo_white} width={100} height={100} />
           </div>
           <div>
-            <FlipWords words={words} /> <br />
-            Tariq Riaz
+            You are <br /> 
+            <FlipWords words={words} />            
           </div>
         </div>
          
@@ -243,19 +244,14 @@ export default function Home() {
         <AuroraBackgroundDemo showContent={false} />
       </div>
       <SpeedWord></SpeedWord>
-      <div className="flex flex-wrap justify-evenly">
+      <div className="flex flex-wrap justify-center gap-5">
         <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
           <HideCard Logo_src={ItemOne} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
         </div>
         <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
           <HideCard Logo_src={ItemTwo} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
         </div>
-        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
-          <HideCard Logo_src={ItemOne} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
-        </div>
-        <div className="w-full sm:w-1/2 lg:w-1/4 p-2">
-          <HideCard Logo_src={ItemTwo} title='Eclipse Spiral' description='The Eclipse Spiral is a perfect blend of elegance and boldness, making it a standout piece for any occasion.'></HideCard>
-        </div>
+        
       </div>
     </div>
 
@@ -291,6 +287,7 @@ export default function Home() {
         </Link>
          Ready to try? 
         </Button>
+        <FloatingContucts></FloatingContucts>
        
     </div>
     </main>
